@@ -5,7 +5,28 @@
 > ghi lại thành tích để so ai ghép nhanh hơn, câu đố sau khi ghép xong, 3 độ khó, thư viện 20 tranh
 > Phục Hưng, đăng nhập để tải ảnh riêng và chia sẻ thành tích lên mạng xã hội.
 
-Trạng thái: **bản kế hoạch v2** — chưa có code. Các quyết định đã chốt ở §0; câu hỏi còn mở ở §13.
+Trạng thái: **v3 — đã có source code** cho MVP và Giai đoạn 2 (M0–M6). Xem mục "Trạng thái triển khai" ngay dưới đây;
+hướng dẫn deploy ở [`DEPLOY.md`](../DEPLOY.md).
+
+### Trạng thái triển khai
+
+| Mốc | Trạng thái |
+|---|---|
+| M0 Khung dự án & engine tranh gạch | ✅ |
+| M1 Mảnh vuông · M2 Mảnh jigsaw | ✅ (cả 3 chế độ) |
+| M3 Nội dung: 20 tranh, 100 câu quiz EN/VI (5 câu/tranh, rút 3 câu mỗi ván), trang nguồn ảnh | ✅ — ảnh tranh được tải lúc build (`npm run library:fetch`) |
+| M4 Quiz, kết quả, thành tích cục bộ, thẻ chia sẻ, Web Share, PWA | ✅ |
+| M5 Tài khoản (Google/Facebook/email), ảnh cloud, chép lịch sử khách lên tài khoản, xoá tài khoản | ✅ |
+| M6 Ván xếp hạng có xác minh, bảng xếp hạng, link thách đấu, huy hiệu, trang `/s/{id}` | ✅ |
+| Giai đoạn 3: quiz AI, "Tranh của ngày", ngàm kiểu gạch, xuất danh sách gạch | ⏳ chưa làm |
+
+Khác với kế hoạch ban đầu (để đơn giản hoá việc tự host):
+- Một ứng dụng Next.js duy nhất thay cho monorepo `apps/` + `packages/`; logic dùng chung nằm ở `src/lib/`.
+- Việc xác minh ván chơi chạy trong route API của Next.js (`/api/attempts/*`), không dùng Supabase Edge Functions.
+  Nhờ vậy backend chỉ cần Supabase "thuần" (Auth + Postgres + Storage).
+- Ảnh Open Graph của trang chia sẻ chính là thẻ thành tích được tải lên, thay vì sinh bằng `@vercel/og`.
+- Chưa tích hợp Sentry/Plausible; chưa có bộ lọc ảnh nhạy cảm tự động cho trang công khai.
+- Khách (không đăng nhập) chỉ lên bảng của link thách đấu; bảng xếp hạng chung chỉ dành cho người đã đăng nhập.
 
 ---
 

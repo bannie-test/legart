@@ -1,0 +1,45 @@
+# Legart — self-hosted frontend (+ optional HTTPS reverse proxy).
+# The backend is Supabase (cloud or self-hosted); see DEPLOY.md.
+#
+#   cp .env.example .env        # fill in SITE_URL and the Supabase keys
+#   docker compose up -d --build                    # app on http://SERVER:3000
+#   docker compose --profile https up -d --build    # app behind Caddy with automatic HTTPS on $DOMAIN
+
+services:
+  web:
+    build:
+      context: .
+      args:
+        FETCH_LIBRARY: "1"
+    image: legart-web:latest
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      PORT: "3000"
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+    # Uncomment to manage library paintings outside the image
+    # (the folder must contain <id>.jpg and <id>.thumb.jpg for every painting).
+    # volumes:
+    #   - ./data/library:/app/public/library:ro
+
+  caddy:
+    image: caddy:2-alpine
+    profiles: ["https"]
+    restart: unless-stopped
+    depends_on:
+      - web
+    environment:
+      DOMAIN: ${DOMAIN:?set DOMAIN in .env for the https profile}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:
