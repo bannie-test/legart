@@ -1,10 +1,23 @@
 import type { Metadata, Viewport } from "next";
+import { Kalam, Patrick_Hand } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Providers } from "@/components/Providers";
 import { Header } from "@/components/Header";
 import { backendEnabled, getPublicConfig } from "@/lib/config";
 import "./globals.css";
+
+const kalam = Kalam({
+  subsets: ["latin"],
+  weight: ["700"],
+  variable: "--font-heading",
+});
+
+const patrickHand = Patrick_Hand({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-body",
+});
 
 export async function generateMetadata(): Promise<Metadata> {
   const tm = await getTranslations("meta");
@@ -26,21 +39,33 @@ export const viewport: Viewport = {
   themeColor: "#c91a09",
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const locale = await getLocale();
   const t = await getTranslations("footer");
   const cfg = getPublicConfig();
   return (
     <html lang={locale}>
-      <body className="antialiased">
+      <body className={`${kalam.variable} ${patrickHand.variable} antialiased`}>
         <NextIntlClientProvider>
           <Providers config={{ ...cfg, backend: backendEnabled() }}>
             <Header />
-            <main className="mx-auto w-full max-w-5xl px-4 pb-24 sm:pb-10">{children}</main>
+            <main className="mx-auto w-full max-w-5xl px-4 pb-24 sm:pb-10">
+              {children}
+            </main>
             <footer className="mx-auto max-w-5xl px-4 pb-8 text-xs muted">
               <p>{t("disclaimer")}</p>
               <p className="mt-1">
-                <a className="underline" href="/credits">{t("credits")}</a> · <a className="underline" href="/privacy">{t("privacy")}</a>
+                <a className="underline" href="/credits">
+                  {t("credits")}
+                </a>{" "}
+                ·{" "}
+                <a className="underline" href="/privacy">
+                  {t("privacy")}
+                </a>
               </p>
             </footer>
           </Providers>

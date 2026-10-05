@@ -1,10 +1,63 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#c91a09"/>
-  <g fill="#e8402b" stroke="#8f1306" stroke-width="2">
-    <circle cx="20" cy="20" r="9"/><circle cx="44" cy="20" r="9"/>
-    <circle cx="20" cy="44" r="9"/><circle cx="44" cy="44" r="9"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Background rounded square -->
+  <rect x="8" y="8" width="184" height="184" rx="16" ry="16" fill="#1a1a2e"/>
+  
+  <!-- Outer pixel border -->
+  <rect x="16" y="16" width="168" height="168" rx="8" ry="8" fill="none" stroke="#4a4a6a" stroke-width="4"/>
+  
+  <!-- TOP-LEFT (Red) -->
+  <g>
+    <path d="M36 36 h56 v20 c0 8 8 12 16 12 s16-4 16-12 v20 h-20 c-8 0-12 8-12 16 s4 16 12 16 h20 v20 h-56 c-8 0-12-8-12-16 s4-16 12-16 v-20 h20 c8 0 12-8 12-16 s-4-16-12-16 h-20 z" fill="#e63946"/>
+    <circle cx="52" cy="52" r="7" fill="#ff6b6b"/>
+    <circle cx="76" cy="52" r="7" fill="#ff6b6b"/>
+    <circle cx="52" cy="76" r="7" fill="#ff6b6b"/>
+    <circle cx="76" cy="76" r="7" fill="#ff6b6b"/>
+    <rect x="40" y="40" width="8" height="4" fill="#ff8e8e" opacity="0.7"/>
   </g>
-  <g fill="#ffffff" opacity=".35">
-    <circle cx="17" cy="17" r="3"/><circle cx="41" cy="17" r="3"/><circle cx="17" cy="41" r="3"/><circle cx="41" cy="41" r="3"/>
+  
+  <!-- TOP-RIGHT (Blue) -->
+  <g>
+    <path d="M108 36 h56 c8 0 12 8 12 16 s-4 16-12 16 v20 h-20 c-8 0-12 8-12 16 s4 16 12 16 h20 v20 h-56 v-20 c0-8 8-12 16-12 s16 4 16 12 v-20 h20 c8 0 12-8 12-16 s-4-16-12-16 h-20 v-20 z" fill="#457b9d"/>
+    <circle cx="124" cy="52" r="7" fill="#5c9ead"/>
+    <circle cx="148" cy="52" r="7" fill="#5c9ead"/>
+    <circle cx="124" cy="76" r="7" fill="#5c9ead"/>
+    <circle cx="148" cy="76" r="7" fill="#5c9ead"/>
+    <rect x="112" y="40" width="8" height="4" fill="#7eb8c9" opacity="0.7"/>
   </g>
+  
+  <!-- BOTTOM-LEFT (Yellow) -->
+  <g>
+    <path d="M36 108 h56 v20 c0 8 8 12 16 12 s16-4 16-12 v20 h-20 c-8 0-12 8-12 16 s4 16 12 16 h20 v20 h-56 c-8 0-12-8-12-16 s4-16 12-16 v-20 h20 c8 0 12-8 12-16 s-4-16-12-16 h-20 z" fill="#f4a261"/>
+    <circle cx="52" cy="124" r="7" fill="#f7c59f"/>
+    <circle cx="76" cy="124" r="7" fill="#f7c59f"/>
+    <circle cx="52" cy="148" r="7" fill="#f7c59f"/>
+    <circle cx="76" cy="148" r="7" fill="#f7c59f"/>
+    <rect x="40" y="112" width="8" height="4" fill="#f9d5b5" opacity="0.7"/>
+  </g>
+  
+  <!-- BOTTOM-RIGHT (Green) -->
+  <g>
+    <path d="M108 108 h56 c8 0 12 8 12 16 s-4 16-12 16 v20 h-20 c-8 0-12 8-12 16 s4 16 12 16 h20 v20 h-56 v-20 c0-8 8-12 16-12 s16 4 16 12 v-20 h20 c8 0 12-8 12-16 s-4-16-12-16 h-20 v-20 z" fill="#2a9d8f"/>
+    <circle cx="124" cy="124" r="7" fill="#40b3a2"/>
+    <circle cx="148" cy="124" r="7" fill="#40b3a2"/>
+    <circle cx="124" cy="148" r="7" fill="#40b3a2"/>
+    <circle cx="148" cy="148" r="7" fill="#40b3a2"/>
+    <rect x="112" y="112" width="8" height="4" fill="#5ec4b5" opacity="0.7"/>
+  </g>
+  
+  <!-- Center pixel-art image core -->
+  <g>
+    <rect x="88" y="88" width="10" height="10" fill="#e9c46a"/>
+    <rect x="100" y="88" width="10" height="10" fill="#f4a261"/>
+    <rect x="88" y="100" width="10" height="10" fill="#e76f51"/>
+    <rect x="100" y="100" width="10" height="10" fill="#e9c46a"/>
+    <rect x="90" y="90" width="3" height="3" fill="#ffe08a"/>
+    <rect x="102" y="90" width="3" height="3" fill="#ffc08a"/>
+  </g>
+  
+  <!-- Connection dots -->
+  <circle cx="100" cy="36" r="3" fill="#ffffff" opacity="0.4"/>
+  <circle cx="164" cy="100" r="3" fill="#ffffff" opacity="0.4"/>
+  <circle cx="100" cy="164" r="3" fill="#ffffff" opacity="0.4"/>
+  <circle cx="36" cy="100" r="3" fill="#ffffff" opacity="0.4"/>
 </svg>
