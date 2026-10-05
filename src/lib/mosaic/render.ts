@@ -51,8 +51,13 @@ function studSprite(hex: string, s: number): AnyCanvas {
   return c;
 }
 
+/** Hex colour per palette index (auto palettes carry their own colours). */
+export function colorsOf(m: Pick<Mosaic, "paletteId" | "colors">): string[] {
+  return m.colors ?? getPalette(m.paletteId).colors.map((c) => c.hex);
+}
+
 export function renderMosaic(m: Mosaic, studPx: number): AnyCanvas {
-  const palette = getPalette(m.paletteId);
+  const colors = colorsOf(m);
   const canvas = makeCanvas(m.width * studPx, m.height * studPx);
   const ctx = canvas.getContext("2d") as Ctx;
   const sprites = new Map<number, AnyCanvas>();
@@ -61,7 +66,7 @@ export function renderMosaic(m: Mosaic, studPx: number): AnyCanvas {
       const idx = m.indices[y * m.width + x];
       let sp = sprites.get(idx);
       if (!sp) {
-        sp = studSprite(palette.colors[idx]?.hex ?? "#888888", studPx);
+        sp = studSprite(colors[idx] ?? "#888888", studPx);
         sprites.set(idx, sp);
       }
       ctx.drawImage(sp as CanvasImageSource, x * studPx, y * studPx);
@@ -72,17 +77,27 @@ export function renderMosaic(m: Mosaic, studPx: number): AnyCanvas {
 
 /** Flat version (one pixel per stud), handy for thumbnails. */
 export function renderFlat(m: Mosaic): AnyCanvas {
-  const palette = getPalette(m.paletteId);
+  const colors = colorsOf(m);
   const canvas = makeCanvas(m.width, m.height);
   const ctx = canvas.getContext("2d") as Ctx;
   const img = ctx.createImageData(m.width, m.height);
   for (let i = 0; i < m.indices.length; i++) {
-    const n = parseInt((palette.colors[m.indices[i]]?.hex ?? "#888888").slice(1), 16);
+    const n = parseInt((colors[m.indices[i]] ?? "#888888").slice(1), 16);
     img.data[i * 4] = (n >> 16) & 255;
     img.data[i * 4 + 1] = (n >> 8) & 255;
     img.data[i * 4 + 2] = n & 255;
     img.data[i * 4 + 3] = 255;
   }
   ctx.putImageData(img, 0, 0);
+  return canvas;
+}
+
+/** Crisp pixel art: every cell becomes a `px` × `px` square (nearest-neighbour scaling). */
+export function renderPixel(m: Mosaic, px: number): AnyCanvas {
+  const flat = renderFlat(m);
+  const canvas = makeCanvas(m.width * px, m.height * px);
+  const ctx = canvas.getContext("2d") as Ctx;
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(flat as CanvasImageSource, 0, 0, canvas.width, canvas.height);
   return canvas;
 }

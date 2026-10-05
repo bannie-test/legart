@@ -34,3 +34,16 @@ describe("mosaic engine", () => {
     expect(colorCounts(m).length).toBeGreaterThan(1);
   });
 });
+
+describe("auto palette", () => {
+  it("picks the picture's own colours", () => {
+    const w = 32, h = 32;
+    const data = new Uint8ClampedArray(w * h * 4);
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) data.set(x < 16 ? [20, 90, 200, 255] : [230, 200, 40, 255], (y * w + x) * 4);
+    const m = generateMosaic({ data, width: w, height: h }, { width: 8, height: 8, paletteId: "auto", colorCount: 4, dithering: false });
+    expect(m.colors).toBeDefined();
+    const used = colorCounts(m).map((c) => m.colors![c.index].toLowerCase());
+    expect(used).toEqual(expect.arrayContaining(["#145ac8", "#e6c828"]));
+    expect(used.length).toBe(2);
+  });
+});

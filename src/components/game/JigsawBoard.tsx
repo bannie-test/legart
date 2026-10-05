@@ -158,32 +158,43 @@ export function JigsawBoard({ state, art, rules, ghostUrl, area, onAction, apiRe
             backgroundSize: rules.grid === "full" ? `${u}px ${u}px` : undefined,
           }}
         >
-          {rules.ghost && ghostUrl && <img src={ghostUrl} alt="" className="pointer-events-none h-full w-full opacity-25" style={{ imageRendering: "pixelated" }} />}
+          {rules.ghost && ghostUrl && <img src={ghostUrl} alt="" className="pointer-events-none h-full w-full opacity-25" />}
         </div>
         {state.pieces.map((p, i) => {
           if (p.inTray) return null;
           const off = drag && drag.group === p.group ? drag : null;
           return (
-            <img
+            // the wrapper carries the drop shadow: a filter on the clipped <img> itself would be clipped away
+            <div
               key={i}
-              src={art.urls[i]}
-              alt=""
-              draggable={false}
-              className="absolute select-none"
+              className="pointer-events-none absolute"
               style={{
                 left: (p.x + M) * u - pad + (off ? off.dx * u : 0),
                 top: (p.y + M) * u - pad + (off ? off.dy * u : 0),
                 width: art.box,
                 height: art.box,
-                transform: `rotate(${p.rot * 90}deg)`,
-                clipPath: `path('${art.paths[i]}')`,
                 zIndex: p.locked ? 1 : 2 + (zRef.current[p.group] ?? 0),
-                pointerEvents: p.locked ? "none" : "auto",
-                cursor: "grab",
-                filter: off ? "brightness(1.08)" : undefined,
+                filter: p.locked
+                  ? undefined
+                  : off
+                    ? `drop-shadow(0 ${u * 0.06}px ${u * 0.08}px rgba(0,0,0,.45))`
+                    : `drop-shadow(0 ${u * 0.02}px ${u * 0.03}px rgba(0,0,0,.4))`,
               }}
-              onPointerDown={(e) => onPieceDown(e, i)}
-            />
+            >
+              <img
+                src={art.urls[i]}
+                alt=""
+                draggable={false}
+                className="h-full w-full select-none"
+                style={{
+                  transform: `rotate(${p.rot * 90}deg)`,
+                  clipPath: `path('${art.paths[i]}')`,
+                  pointerEvents: p.locked ? "none" : "auto",
+                  cursor: "grab",
+                }}
+                onPointerDown={(e) => onPieceDown(e, i)}
+              />
+            </div>
           );
         })}
       </div>

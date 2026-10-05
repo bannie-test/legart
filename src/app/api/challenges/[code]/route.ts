@@ -19,6 +19,7 @@ export async function GET(req: Request, ctx: { params: Promise<{ code: string }>
     mode: c.mode,
     preview: c.preview,
     seed: Number(c.seed),
+    style: c.style ?? "brick",
     mosaic: c.mosaic,
     questions: c.questions,
     expiresAt: c.expires_at,

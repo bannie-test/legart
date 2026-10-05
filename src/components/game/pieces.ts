@@ -14,10 +14,29 @@ export interface PieceArt {
   edges: JigsawEdges | null;
 }
 
+/** Pressed-cardboard look: light inner edge on the top-left, dark on the bottom-right, thin cut line. */
+function emboss(ctx: CanvasRenderingContext2D, path: Path2D, size: number) {
+  const lw = Math.max(2, size * 0.035);
+  const d = lw * 0.4;
+  ctx.save();
+  ctx.clip(path);
+  ctx.lineWidth = lw;
+  ctx.translate(d, d);
+  ctx.strokeStyle = "rgba(255,255,255,0.32)";
+  ctx.stroke(path);
+  ctx.translate(-2 * d, -2 * d);
+  ctx.strokeStyle = "rgba(0,0,0,0.38)";
+  ctx.stroke(path);
+  ctx.restore();
+  ctx.lineWidth = Math.max(1, size * 0.008);
+  ctx.strokeStyle = "rgba(0,0,0,0.35)";
+  ctx.stroke(path);
+}
+
 const toUrl = (c: HTMLCanvasElement) =>
   new Promise<string>((res, rej) => c.toBlob((b) => (b ? res(URL.createObjectURL(b)) : rej(new Error("toBlob"))), "image/png"));
 
-/** Cuts the rendered mosaic into piece images. */
+/** Cuts the puzzle picture into piece images. */
 export async function buildPieces(mosaic: HTMLCanvasElement, rows: number, cols: number, shape: Shape, seed: number): Promise<PieceArt> {
   const size = Math.floor(mosaic.width / cols);
   const n = rows * cols;
@@ -29,9 +48,9 @@ export async function buildPieces(mosaic: HTMLCanvasElement, rows: number, cols:
       c.width = c.height = size;
       const ctx = c.getContext("2d")!;
       ctx.drawImage(mosaic, (i % cols) * size, Math.floor(i / cols) * size, size, size, 0, 0, size, size);
-      ctx.strokeStyle = "rgba(0,0,0,0.25)";
-      ctx.lineWidth = 2;
-      ctx.strokeRect(1, 1, size - 2, size - 2);
+      const rect = new Path2D();
+      rect.rect(0, 0, size, size);
+      emboss(ctx, rect, size);
       urls.push(await toUrl(c));
     }
     return { urls, size, box: size, paths, edges: null };
@@ -49,15 +68,7 @@ export async function buildPieces(mosaic: HTMLCanvasElement, rows: number, cols:
     ctx.clip(path);
     ctx.drawImage(mosaic, -((i % cols) - JIGSAW_PAD) * size, -(Math.floor(i / cols) - JIGSAW_PAD) * size);
     ctx.restore();
-    ctx.lineWidth = Math.max(1.5, size * 0.02);
-    ctx.strokeStyle = "rgba(0,0,0,0.45)";
-    ctx.stroke(path);
-    ctx.save();
-    ctx.translate(-1, -1);
-    ctx.strokeStyle = "rgba(255,255,255,0.25)";
-    ctx.lineWidth = 1;
-    ctx.stroke(path);
-    ctx.restore();
+    emboss(ctx, path, size);
     urls.push(await toUrl(c));
   }
   return { urls, size, box, paths, edges };

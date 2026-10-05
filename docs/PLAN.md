@@ -20,6 +20,9 @@ hướng dẫn deploy ở [`DEPLOY.md`](../DEPLOY.md).
 | M6 Ván xếp hạng có xác minh, bảng xếp hạng, link thách đấu, huy hiệu, trang `/s/{id}` | ✅ |
 | Giai đoạn 3: quiz AI, "Tranh của ngày", ngàm kiểu gạch, xuất danh sách gạch | ⏳ chưa làm |
 
+Thay đổi theo phản hồi (05/10): mặc định ghép **ảnh gốc** bằng mảnh **jigsaw**; "Pixel art" (màu lấy từ ảnh) và "Gạch"
+là tuỳ chọn *Kiểu tranh* trong màn thiết lập.
+
 Khác với kế hoạch ban đầu (để đơn giản hoá việc tự host):
 - Một ứng dụng Next.js duy nhất thay cho monorepo `apps/` + `packages/`; logic dùng chung nằm ở `src/lib/`.
 - Việc xác minh ván chơi chạy trong route API của Next.js (`/api/attempts/*`), không dùng Supabase Edge Functions.

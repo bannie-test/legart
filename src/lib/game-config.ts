@@ -14,7 +14,13 @@ export interface StoredMosaic {
   paletteId: string;
   /** base64 of the palette-index bytes */
   indices: string;
+  /** colours of an "auto" palette */
+  colors?: string[];
 }
+
+/** How the picture is drawn on the pieces. */
+export type ArtStyle = "photo" | "pixel" | "brick";
+export const ART_STYLES: ArtStyle[] = ["photo", "pixel", "brick"];
 
 export interface GameConfig {
   source: Source;
@@ -26,8 +32,12 @@ export interface GameConfig {
   shape: Shape;
   mode: Mode;
   preview: PreviewPolicy;
+  style: ArtStyle;
+  /** pixels / studs on the long side (pixel & brick styles) */
   detail: number;
   paletteId: string;
+  /** colours of the auto palette (pixel style) */
+  colorCount: number;
   dithering: boolean;
   /** -1..1 */
   brightness: number;
@@ -37,7 +47,7 @@ export interface GameConfig {
   focusX: number;
   focusY: number;
   /** filled when playing a challenge */
-  challenge?: { code: string; seed: number; mosaic: StoredMosaic; imageUrl: string | null; artworkId: string | null; questions: QuizQuestion[] };
+  challenge?: { code: string; seed: number; style: ArtStyle; mosaic: StoredMosaic | null; imageUrl: string | null; artworkId: string | null; questions: QuizQuestion[] };
 }
 
 const KEY = "legart:config";
@@ -61,7 +71,7 @@ export function loadConfig(): GameConfig | null {
 
 export function configKey(c: GameConfig): string {
   const src = c.source.kind === "challenge" ? `c:${c.source.code}` : `${c.source.kind}:${c.source.id}`;
-  return [src, c.rows, c.cols, c.shape, c.mode, c.preview, c.detail, c.paletteId, c.dithering ? 1 : 0].join("|");
+  return [src, c.rows, c.cols, c.shape, c.mode, c.preview, c.style, c.detail, c.paletteId, c.colorCount, c.dithering ? 1 : 0].join("|");
 }
 
 export function toBase64(bytes: Uint8Array): string {

@@ -105,6 +105,13 @@ export function piecePathD(edges: JigsawEdges, i: number, size: number): string 
   return `M ${tx(start)} ` + segs.map((s) => `C ${tx(s[0])} ${tx(s[1])} ${tx(s[2])}`).join(" ") + " Z";
 }
 
+/** SVG path of piece i in board coordinates scaled by `size` (used to draw cut lines over a preview). */
+export function boardPathD(edges: JigsawEdges, i: number, size: number): string {
+  const { start, segs } = pieceOutline(edges, i);
+  const tx = (p: Pt) => `${(p[0] * size).toFixed(1)} ${(p[1] * size).toFixed(1)}`;
+  return `M ${tx(start)} ` + segs.map((s) => `C ${tx(s[0])} ${tx(s[1])} ${tx(s[2])}`).join(" ") + " Z";
+}
+
 // ---------------------------------------------------------------------------
 // Game state
 // ---------------------------------------------------------------------------

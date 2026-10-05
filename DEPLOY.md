@@ -79,8 +79,8 @@ Facebook Login và nút chia sẻ của điện thoại (Web Share API) **bắt 
 ### 3.2 Tạo bảng, chính sách bảo mật, bucket lưu trữ
 Chọn **một** trong hai cách:
 
-- **SQL Editor**: mở **SQL Editor → New query**, dán toàn bộ nội dung
-  `supabase/migrations/20261003000000_init.sql`, bấm **Run**.
+- **SQL Editor**: mở **SQL Editor → New query**, lần lượt dán và **Run** từng file trong `supabase/migrations/`
+  theo thứ tự tên (`20261003000000_init.sql`, rồi `20261005000000_art_style.sql`, …).
 - **Supabase CLI** (trên máy có source):
   ```bash
   npx supabase login
@@ -142,7 +142,9 @@ Khởi động và chạy migration của Legart:
 ```bash
 docker compose pull && docker compose up -d
 # chạy migration (Postgres trong stack Supabase)
-docker compose exec -T db psql -U postgres -d postgres < /path/to/legart/supabase/migrations/20261003000000_init.sql
+for f in /path/to/legart/supabase/migrations/*.sql; do
+  docker compose exec -T db psql -U postgres -d postgres -v ON_ERROR_STOP=1 < "$f"
+done
 ```
 
 Đặt Supabase sau HTTPS (cổng Kong mặc định là `8000`), ví dụ với Caddy:

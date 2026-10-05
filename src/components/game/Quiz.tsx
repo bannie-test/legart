@@ -76,7 +76,7 @@ export function Quiz({ items, onDone }: { items: QuizItem[]; onDone: (a: QuizAns
               {o.kind === "color" && (
                 <span className="flex items-center gap-2">
                   <span className="inline-block h-8 w-8 rounded-full border" style={{ background: o.hex }} />
-                  {tx(o.name)}
+                  {o.name && tx(o.name)}
                 </span>
               )}
               {o.kind === "image" && <img src={o.src} alt="" className="mx-auto h-20 w-20 object-contain" />}

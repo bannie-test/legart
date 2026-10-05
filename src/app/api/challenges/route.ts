@@ -1,12 +1,13 @@
 import { fromBase64 } from "@/lib/game-config";
 import { cleanL10n, cleanQuestions } from "@/lib/server/validate";
-import { getPalette } from "@/lib/mosaic/palettes";
+import { AUTO_PALETTE_ID, getPalette } from "@/lib/mosaic/palettes";
 import { badRequest, dataUrlToBuffer, json, notConfigured, randomCode, rateLimited, readJson } from "@/lib/server-utils";
 import { getAdmin, getUserFromRequest } from "@/lib/supabase/server";
 
 interface Body {
   attemptId: string;
-  mosaic: { width: number; height: number; paletteId: string; indices: string };
+  style?: string;
+  mosaic: { width: number; height: number; paletteId: string; indices: string; colors?: unknown } | null;
   title: unknown;
   questions?: unknown;
   imageDataUrl?: string;
@@ -29,20 +30,27 @@ export async function POST(req: Request) {
   if (!["ranked", "unranked"].includes(att.status)) return badRequest("attempt-not-finished");
   if (att.challenge_id) return badRequest("already-a-challenge");
 
-  const m = b.mosaic;
-  let bytes: Uint8Array;
-  try {
-    bytes = fromBase64(String(m?.indices ?? ""));
-  } catch {
-    return badRequest("bad-mosaic");
+  const style = b.style === "pixel" || b.style === "brick" ? b.style : "photo";
+  let mosaic: { width: number; height: number; paletteId: string; indices: string; colors?: string[] } | null = null;
+  if (style !== "photo") {
+    const m = b.mosaic;
+    let bytes: Uint8Array;
+    try {
+      bytes = fromBase64(String(m?.indices ?? ""));
+    } catch {
+      return badRequest("bad-mosaic");
+    }
+    const auto = m?.paletteId === AUTO_PALETTE_ID;
+    const colors = auto && Array.isArray(m?.colors) ? m.colors.filter((h): h is string => typeof h === "string" && /^#[0-9a-f]{6}$/i.test(h)) : [];
+    const paletteSize = auto ? colors.length : getPalette(String(m?.paletteId)).id === m?.paletteId ? getPalette(String(m?.paletteId)).colors.length : 0;
+    if (
+      !m || !Number.isInteger(m.width) || !Number.isInteger(m.height) || m.width % att.cols || m.height % att.rows ||
+      m.width > 256 || m.height > 256 || bytes.length !== m.width * m.height || !paletteSize || paletteSize > 64 ||
+      (auto && colors.length !== (m.colors as unknown[]).length) || bytes.some((v) => v >= paletteSize)
+    )
+      return badRequest("bad-mosaic");
+    mosaic = { width: m.width, height: m.height, paletteId: m.paletteId, indices: m.indices, ...(auto ? { colors } : {}) };
   }
-  const palette = getPalette(String(m?.paletteId));
-  if (
-    !Number.isInteger(m?.width) || !Number.isInteger(m?.height) || m.width % att.cols || m.height % att.rows ||
-    m.width > 200 || m.height > 200 || bytes.length !== m.width * m.height || palette.id !== m.paletteId ||
-    bytes.some((v) => v >= palette.colors.length)
-  )
-    return badRequest("bad-mosaic");
 
   let code = "";
   for (let i = 0; i < 6 && !code; i++) {
@@ -76,7 +84,8 @@ export async function POST(req: Request) {
       mode: att.mode,
       preview: att.preview,
       seed: att.seed,
-      mosaic: { width: m.width, height: m.height, paletteId: m.paletteId, indices: m.indices },
+      style,
+      mosaic,
       questions: cleanQuestions(b.questions),
       expires_at: new Date(Date.now() + CHALLENGE_DAYS * 86_400_000).toISOString(),
     })

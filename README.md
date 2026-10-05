@@ -1,7 +1,7 @@
 # Legart
 
-Ứng dụng web (ưu tiên điện thoại) biến tranh và ảnh thành **tranh ghép gạch** (brick mosaic) rồi cắt thành mảnh để ghép lại
-trước đồng hồ. Có thư viện 20 kiệt tác Phục Hưng, quiz nghệ thuật song ngữ, 3 độ khó, mảnh vuông hoặc jigsaw, ghi thành tích,
+Ứng dụng web (ưu tiên điện thoại) cắt tranh và ảnh thành **mảnh ghép jigsaw** (giữ nguyên ảnh gốc, hoặc đổi sang
+pixel art / tranh gạch trong cài đặt) để ghép lại trước đồng hồ. Có thư viện 20 kiệt tác Phục Hưng, quiz nghệ thuật song ngữ, 3 độ khó, mảnh vuông hoặc jigsaw, ghi thành tích,
 bảng xếp hạng, link thách đấu và chia sẻ lên mạng xã hội.
 
 *A mobile-first web game that turns paintings and photos into brick-mosaic puzzles (square or jigsaw pieces),
@@ -11,10 +11,10 @@ with timed play, bilingual EN/VI art quizzes, recorded results, leaderboards, ch
 
 ## Tính năng
 
-- **Tạo tranh gạch** ngay trên trình duyệt (Web Worker): lấy trung bình màu trong không gian tuyến tính, ánh xạ màu CIELAB vào
-  bảng màu gạch (35 màu cổ điển, đơn sắc, sepia, pop art), hoà trộn màu Floyd–Steinberg tuỳ chọn, vẽ nút gạch nổi.
+- **Kiểu tranh**: *Ảnh gốc* (mặc định), *Pixel art* (bảng màu 8–64 màu lấy từ chính bức ảnh bằng k-means, ô vuông sắc nét)
+  hoặc *Gạch* (bảng màu gạch cố định, nút gạch nổi). Mọi xử lý chạy trên trình duyệt (Web Worker).
 - **Số mảnh** 9 / 16 / **36** (mặc định) / 64 / 100 / 144, lưới tự điều chỉnh theo khung ảnh.
-- **Hai kiểu mảnh**: vuông (kéo vào ô, thả lên ô khác để đổi chỗ) và jigsaw (ngàm sinh theo seed, kéo tự do, hút vào bàn,
+- **Hai kiểu mảnh** (mặc định jigsaw, có viền nổi và bóng đổ): vuông (kéo vào ô, thả lên ô khác để đổi chỗ) và jigsaw (ngàm sinh theo seed, kéo tự do, hút vào bàn,
   dính với mảnh bên cạnh thành nhóm, phóng to / thu nhỏ / kéo bàn bằng 2 ngón).
 - **3 chế độ**: Dễ, Khó (xoay mảnh, phạt khi xem ảnh gốc), Siêu khó (không lưới, không báo đúng sai, 1 lần xem 3 giây).
 - **Ảnh gốc song song** (dải phía trên khi cầm dọc, chia đôi màn hình khi xoay ngang), nhấn giữ để xem, hoặc ẩn.

@@ -8,11 +8,9 @@ import { getArtwork } from "@/content/artworks";
 import { db, newId, previousBest, type AttemptRecord } from "@/lib/db/local";
 import { configKey, fromBase64, loadConfig, toBase64, type GameConfig, type StoredMosaic } from "@/lib/game-config";
 import { resolveSource, SourceError } from "@/lib/image-source";
-import { buildMosaic, focusCrop } from "@/lib/mosaic/client";
+import { buildArt, ghostUrl, quizMosaic, type ArtOptions } from "@/lib/art";
 import type { Mosaic } from "@/lib/mosaic/engine";
-import { renderFlat, renderMosaic } from "@/lib/mosaic/render";
 import { initGame, penaltiesFromLog, progress, reduceGame, type GameState } from "@/lib/puzzle/game";
-import { studsPerPiece } from "@/lib/puzzle/grid";
 import { rulesFor } from "@/lib/puzzle/modes";
 import { squareFull } from "@/lib/puzzle/square";
 import { formatTime, puzzleScore, quizScore } from "@/lib/puzzle/scoring";
@@ -30,11 +28,15 @@ import { Tray } from "./Tray";
 type Phase = "loading" | "error" | "countdown" | "playing" | "solved" | "quiz" | "result";
 
 interface Assets {
-  mosaic: Mosaic;
+  /** colour-quantised picture (pixel/brick styles), null for photo puzzles */
+  mosaic: Mosaic | null;
+  /** full picture the pieces are cut from */
   canvas: HTMLCanvasElement;
-  flatUrl: string;
+  ghostUrl: string;
   refUrl: string;
-  stored: StoredMosaic;
+  stored: StoredMosaic | null;
+  bitmap: ImageBitmap;
+  artOptions: ArtOptions;
 }
 
 const HIDDEN_LIMIT_MS = 30_000;
@@ -84,7 +86,13 @@ export function Game() {
     if (!ready) return;
     let cancelled = false;
     (async () => {
-      const c = loadConfig();
+      const loaded = loadConfig();
+      // configs saved by older versions have no style: they were brick mosaics
+      const c: GameConfig | null = loaded && {
+        ...loaded,
+        style: loaded.challenge?.style ?? loaded.style ?? "brick",
+        colorCount: loaded.colorCount ?? 32,
+      };
       if (!c) {
         setError("no-config");
         return setPhase("error");
@@ -95,24 +103,18 @@ export function Game() {
         const resumed = saved && configKey(saved.config) === configKey(c) && !saved.state.solved ? saved : undefined;
 
         const src = await resolveSource(c.source, supabase, c.challenge?.imageUrl);
-        let mosaic: Mosaic;
-        if (c.challenge) {
-          mosaic = { ...c.challenge.mosaic, indices: fromBase64(c.challenge.mosaic.indices) };
-        } else {
-          const k = studsPerPiece(c.rows, c.cols, c.detail);
-          const crop = focusCrop(src.bitmap.width, src.bitmap.height, c.cols / c.rows, c.focusX, c.focusY);
-          mosaic = await buildMosaic(src.bitmap, crop, {
-            width: c.cols * k, height: c.rows * k, paletteId: c.paletteId, dithering: c.dithering,
-            brightness: c.brightness, contrast: c.contrast, saturation: c.saturation,
-          });
-        }
-        const k = mosaic.width / c.cols;
-        const canvas = renderMosaic(mosaic, Math.max(4, Math.round(120 / k))) as HTMLCanvasElement;
-        const flat = renderFlat(mosaic) as HTMLCanvasElement;
-        assets.current = {
-          mosaic, canvas, flatUrl: flat.toDataURL(), refUrl: src.url,
-          stored: { width: mosaic.width, height: mosaic.height, paletteId: mosaic.paletteId, indices: toBase64(mosaic.indices) },
+        const given = c.challenge?.mosaic ? { ...c.challenge.mosaic, indices: fromBase64(c.challenge.mosaic.indices) } : null;
+        const artOptions: ArtOptions = {
+          style: c.style, rows: c.rows, cols: c.cols, detail: c.detail, paletteId: c.paletteId, colorCount: c.colorCount,
+          dithering: c.dithering, brightness: c.brightness, contrast: c.contrast, saturation: c.saturation, focusX: c.focusX, focusY: c.focusY,
         };
+        const built = await buildArt(src.bitmap, artOptions, given);
+        const m = built.mosaic;
+        assets.current = {
+          mosaic: m, canvas: built.canvas, ghostUrl: ghostUrl(built), refUrl: src.url, bitmap: src.bitmap, artOptions,
+          stored: m ? { width: m.width, height: m.height, paletteId: m.paletteId, indices: toBase64(m.indices), colors: m.colors } : null,
+        };
+        const canvas = built.canvas;
 
         // seed: resumed game > server-issued (ranked) > challenge > random
         let seed = c.challenge?.seed ?? randomSeed();
@@ -279,7 +281,10 @@ export function Game() {
     let items: QuizItem[];
     if (c.challenge?.questions.length) items = questionsQuiz(c.challenge.questions, seedRef.current);
     else if (lib) items = libraryQuiz(lib, seedRef.current);
-    else items = memoryQuiz(a.mosaic, seedRef.current, squareThumbs(), c.cols, c.rows);
+    else {
+      const m = a.mosaic ?? (await quizMosaic(a.bitmap, a.artOptions));
+      items = memoryQuiz(m, seedRef.current, squareThumbs(), c.cols, c.rows, !a.mosaic);
+    }
     setQuizItems(items);
     setTimeout(() => (items.length ? setPhase("quiz") : finishWithQuiz([])), 1400);
   }
@@ -423,7 +428,7 @@ export function Game() {
           prevBest={result.prevBest}
           server={result.server}
           attemptId={attemptRef.current}
-          mosaicCanvas={assets.current.canvas}
+          artCanvas={assets.current.canvas}
           storedMosaic={assets.current.stored}
           imageUrl={assets.current.refUrl}
           onPlayAgain={() => window.location.replace("/play")}
@@ -447,7 +452,7 @@ export function Game() {
   const pen = cfg && rules ? penaltiesFromLog(logRef.current, rules) : null;
   const hintsUsed = pen?.hints ?? 0;
   const peeksUsed = pen?.peeks ?? 0;
-  const refSrc = refMode === "photo" ? a?.refUrl : a?.flatUrl;
+  const refSrc = refMode === "photo" || !a?.mosaic ? a?.refUrl : a?.ghostUrl;
   const trayIds = s ? s.tray : [];
   const progressPct = s ? Math.round(progress(s) * 100) : 0;
 
@@ -493,24 +498,24 @@ export function Game() {
           <div className="shrink-0 border-b landscape:w-[34%] landscape:border-b-0 landscape:border-r" style={{ borderColor: "var(--border)" }}>
             <div className="flex items-center gap-2 px-2 py-1 text-xs">
               <button className="underline" onClick={() => setRefCollapsed(!refCollapsed)}>{refCollapsed ? t("showRef") : t("hideRef")}</button>
-              {!refCollapsed && (
+              {!refCollapsed && a.mosaic && (
                 <button className="underline" onClick={() => setRefMode(refMode === "photo" ? "mosaic" : "photo")}>
                   {refMode === "photo" ? t("refMosaic") : t("refPhoto")}
                 </button>
               )}
             </div>
             {!refCollapsed && (
-              <img src={refSrc} alt={t("reference")} className="mx-auto max-h-[22vh] object-contain px-2 pb-2 landscape:max-h-[calc(100dvh-160px)]" style={{ imageRendering: refMode === "mosaic" ? "pixelated" : undefined }} />
+              <img src={refSrc} alt={t("reference")} className="mx-auto max-h-[22vh] object-contain px-2 pb-2 landscape:max-h-[calc(100dvh-160px)]" />
             )}
           </div>
         )}
         <div ref={areaRef} className="relative flex min-h-0 min-w-0 flex-1 items-center justify-center">
           {phase === "loading" && <div className="text-center"><div className="text-4xl">🧱</div><p className="mt-2 muted">{t("building")}</p></div>}
           {s && art && a && rules && s.kind === "square" && (
-            <SquareBoard state={s} art={art} rules={rules} ghostUrl={a.flatUrl} area={area} hidden={dragPiece} onPieceDown={onPieceDown} />
+            <SquareBoard state={s} art={art} rules={rules} ghostUrl={a.ghostUrl} area={area} hidden={dragPiece} onPieceDown={onPieceDown} />
           )}
           {s && art && a && rules && s.kind === "jigsaw" && (
-            <JigsawBoard state={s} art={art} rules={rules} ghostUrl={a.flatUrl} area={area} onAction={(x: JigsawAction) => dispatch(x)} apiRef={jigsawApi} />
+            <JigsawBoard state={s} art={art} rules={rules} ghostUrl={a.ghostUrl} area={area} onAction={(x: JigsawAction) => dispatch(x)} apiRef={jigsawApi} />
           )}
           {phase === "countdown" && (
             <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/40">

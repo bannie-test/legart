@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useApp } from "./Providers";
-import { saveConfig, type StoredMosaic } from "@/lib/game-config";
+import { saveConfig, type ArtStyle, type StoredMosaic } from "@/lib/game-config";
 import { DEFAULT_DETAIL } from "@/lib/puzzle/types";
 import type { Mode, PreviewPolicy, Shape } from "@/lib/puzzle/types";
 import type { L10n, QuizQuestion } from "@/content/types";
@@ -19,7 +19,8 @@ export interface ChallengeInfo {
   mode: Mode;
   preview: PreviewPolicy;
   seed: number;
-  mosaic: StoredMosaic;
+  style: ArtStyle;
+  mosaic: StoredMosaic | null;
   questions: QuizQuestion[];
 }
 
@@ -37,11 +38,11 @@ export function PlayChallenge({ challenge: c }: { challenge: ChallengeInfo }) {
     saveConfig({
       source: { kind: "challenge", code: c.code },
       title: c.title,
-      aspect: `${c.mosaic.width}:${c.mosaic.height}`,
+      aspect: `${c.cols}:${c.rows}`,
       pieces: c.rows * c.cols, rows: c.rows, cols: c.cols, shape: c.shape, mode: c.mode, preview: c.preview,
-      detail: DEFAULT_DETAIL, paletteId: c.mosaic.paletteId, dithering: false, brightness: 0, contrast: 0, saturation: 0,
-      focusX: 0.5, focusY: 0.5,
-      challenge: { code: c.code, seed: c.seed, mosaic: c.mosaic, imageUrl: c.imageUrl, artworkId: c.artworkId, questions: c.questions },
+      style: c.style, detail: DEFAULT_DETAIL, paletteId: c.mosaic?.paletteId ?? "auto", colorCount: 32, dithering: false,
+      brightness: 0, contrast: 0, saturation: 0, focusX: 0.5, focusY: 0.5,
+      challenge: { code: c.code, seed: c.seed, style: c.style, mosaic: c.mosaic, imageUrl: c.imageUrl, artworkId: c.artworkId, questions: c.questions },
     });
     router.push("/play");
   }

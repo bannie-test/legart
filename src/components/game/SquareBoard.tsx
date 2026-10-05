@@ -19,7 +19,7 @@ export function SquareBoard({ state, art, rules, ghostUrl, area, hidden, onPiece
   const h = size * state.rows;
   return (
     <div className="relative mx-auto" style={{ width: w, height: h, background: "var(--table)", borderRadius: 6, boxShadow: "inset 0 0 0 2px var(--border)" }}>
-      {rules.ghost && ghostUrl && <img src={ghostUrl} alt="" className="pointer-events-none absolute inset-0 h-full w-full opacity-25" style={{ imageRendering: "pixelated" }} />}
+      {rules.ghost && ghostUrl && <img src={ghostUrl} alt="" className="pointer-events-none absolute inset-0 h-full w-full opacity-25" />}
       {state.cells.map((p, cell) => {
         const x = (cell % state.cols) * size;
         const y = Math.floor(cell / state.cols) * size;

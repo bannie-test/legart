@@ -73,6 +73,9 @@ export const PALETTES: Palette[] = [
 ];
 
 export const DEFAULT_PALETTE_ID = "classic";
+/** colours picked from the picture itself (k-means), stored with the mosaic */
+export const AUTO_PALETTE_ID = "auto";
+export const AUTO_COLOR_OPTIONS = [8, 16, 32, 64] as const;
 
 export function getPalette(id: string): Palette {
   return PALETTES.find((p) => p.id === id) ?? PALETTES[0];

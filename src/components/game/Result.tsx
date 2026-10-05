@@ -22,8 +22,8 @@ interface Props {
   prevBest: number | null;
   server: ServerResult | null;
   attemptId: string | null;
-  mosaicCanvas: HTMLCanvasElement;
-  storedMosaic: StoredMosaic;
+  artCanvas: HTMLCanvasElement;
+  storedMosaic: StoredMosaic | null;
   /** reference image, used as the challenge picture for the player's own photos */
   imageUrl: string;
   onPlayAgain: () => void;
@@ -46,7 +46,7 @@ const blobToDataUrl = (b: Blob) =>
     r.readAsDataURL(b);
   });
 
-export function Result({ config, record, prevBest, server, attemptId, mosaicCanvas, storedMosaic, imageUrl, onPlayAgain }: Props) {
+export function Result({ config, record, prevBest, server, attemptId, artCanvas, storedMosaic, imageUrl, onPlayAgain }: Props) {
   const t = useTranslations("result");
   const tg = useTranslations("setup");
   const tx = useL10n();
@@ -73,7 +73,7 @@ export function Result({ config, record, prevBest, server, attemptId, mosaicCanv
   async function card(format: "post" | "story") {
     return drawShareCard(
       {
-        mosaic: mosaicCanvas, title, subtitle: t("cardSubtitle"), time: formatTime(record.totalMs), stats: statsLines,
+        mosaic: artCanvas, title, subtitle: t("cardSubtitle"), time: formatTime(record.totalMs), stats: statsLines,
         player: (user?.user_metadata?.full_name as string) || user?.email?.split("@")[0] || t("guest"),
         url: absolute(challengeUrl ?? shareUrl ?? "/"), brandLine: "Legart",
       },
@@ -126,7 +126,7 @@ export function Result({ config, record, prevBest, server, attemptId, mosaicCanv
       const res = await api("/api/challenges", {
         method: "POST",
         body: JSON.stringify({
-          attemptId, mosaic: storedMosaic, title: config.title, questions,
+          attemptId, style: config.style, mosaic: storedMosaic, title: config.title, questions,
           imageDataUrl: ownImage ? await imageToDataUrl(imageUrl) : undefined,
         }),
       });

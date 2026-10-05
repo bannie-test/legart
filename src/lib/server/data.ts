@@ -2,7 +2,7 @@ import "server-only";
 import { getAdmin, publicStorageUrl } from "../supabase/server";
 import { libraryImage } from "@/content/artworks";
 import type { L10n, QuizQuestion } from "@/content/types";
-import type { StoredMosaic } from "../game-config";
+import type { ArtStyle, StoredMosaic } from "../game-config";
 import type { Mode, PreviewPolicy, Shape } from "../puzzle/types";
 
 export interface ChallengeRow {
@@ -19,7 +19,9 @@ export interface ChallengeRow {
   mode: Mode;
   preview: PreviewPolicy;
   seed: number;
-  mosaic: StoredMosaic;
+  style: ArtStyle;
+  /** null for photo puzzles */
+  mosaic: StoredMosaic | null;
   questions: QuizQuestion[];
   expires_at: string | null;
   created_at: string;

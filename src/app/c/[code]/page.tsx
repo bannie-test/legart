@@ -47,7 +47,7 @@ export default async function ChallengePage({ params }: Props) {
         <PlayChallenge
           challenge={{
             code: c.code, title: c.title, artworkId: c.artwork_id, imageUrl: img, rows: c.rows, cols: c.cols, shape: c.shape,
-            mode: c.mode, preview: c.preview, seed: Number(c.seed), mosaic: c.mosaic, questions: c.questions,
+            mode: c.mode, preview: c.preview, seed: Number(c.seed), style: c.style ?? "brick", mosaic: c.mosaic, questions: c.questions,
           }}
         />
       )}

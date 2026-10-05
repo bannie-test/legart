@@ -1,6 +1,6 @@
 {
   "meta": {
-    "description": "Biến mọi bức ảnh thành tranh ghép gạch. Đua thời gian, giải đố nghệ thuật và thách đấu bạn bè."
+    "description": "Biến mọi bức ảnh thành tranh ghép — giữ nguyên hoặc dạng pixel art. Đua thời gian, giải đố nghệ thuật và thách đấu bạn bè."
   },
   "footer": {
     "disclaimer": "Legart là dự án phi thương mại. Không liên kết hay được bảo trợ bởi Tập đoàn LEGO.",
@@ -15,13 +15,13 @@
     "login": "Đăng nhập"
   },
   "home": {
-    "title": "Ghép tranh gạch nghệ thuật",
-    "subtitle": "Kiệt tác và ảnh của bạn được dựng lại bằng gạch màu — ghép chúng lại thật nhanh trước đồng hồ.",
+    "title": "Ghép tranh nghệ thuật",
+    "subtitle": "Kiệt tác và ảnh của bạn được cắt thành mảnh ghép — ghép lại thật nhanh trước đồng hồ.",
     "ctaLibrary": "Thư viện Phục Hưng",
     "ctaUpload": "Dùng ảnh của tôi",
     "featured": "Kiệt tác",
     "seeAll": "Xem cả 20 tranh",
-    "how1": "Chọn một bức tranh hoặc tải ảnh lên — ảnh sẽ thành tranh gạch.",
+    "how1": "Chọn một bức tranh hoặc tải ảnh lên. Giữ nguyên ảnh gốc hoặc đổi sang pixel art.",
     "how2": "Chọn số mảnh, mảnh vuông hay jigsaw và độ khó. Rồi đua với đồng hồ.",
     "how3": "Trả lời quiz nghệ thuật, chia sẻ thành tích và thách đấu bạn bè.",
     "continueTitle": "Tranh đang ghép dở",
@@ -66,7 +66,18 @@
       "login-required": "Đăng nhập để mở ảnh lưu trong tài khoản.",
       "load-failed": "Không tải được ảnh."
     },
-    "gridInfo": "{rows} × {cols} = {pieces} mảnh · {w} × {h} nút gạch",
+    "gridInfo": "{rows} × {cols} = {pieces} mảnh · {w} × {h} ô màu",
+    "gridInfoPhoto": "{rows} × {cols} = {pieces} mảnh",
+    "style": "Kiểu tranh",
+    "styles": {
+      "photo": "Ảnh gốc",
+      "pixel": "Pixel art",
+      "brick": "Gạch"
+    },
+    "detailPixel": "Số pixel cạnh dài",
+    "paletteAuto": "Màu lấy từ ảnh",
+    "colorCount": "Số màu",
+    "advancedPhoto": "Chỉnh ảnh",
     "pieces": "Số mảnh",
     "bigWarning": "Nhiều mảnh như vậy sẽ rất nhỏ trên điện thoại — nên chơi trên máy tính bảng hoặc máy tính.",
     "shape": "Kiểu mảnh",
@@ -92,9 +103,9 @@
       "off": "Ẩn"
     },
     "peekPenalty": "Mỗi lần xem cộng {s} giây vào thời gian.",
-    "advanced": "Tuỳ chỉnh tranh gạch",
+    "advanced": "Tuỳ chỉnh kiểu tranh",
     "detail": "Số nút gạch cạnh dài",
-    "palette": "Bảng màu gạch",
+    "palette": "Bảng màu",
     "dithering": "Hoà trộn màu (chuyển sắc mượt hơn)",
     "brightness": "Độ sáng",
     "contrast": "Độ tương phản",
@@ -125,7 +136,7 @@
     "hintHelp": "Đặt hộ một mảnh (+{s} giây)",
     "showRef": "Hiện ảnh gốc",
     "hideRef": "Ẩn",
-    "refMosaic": "Xem bản gạch",
+    "refMosaic": "Xem bản đã đổi kiểu",
     "refPhoto": "Xem ảnh chụp",
     "reference": "Ảnh gốc",
     "building": "Đang xếp gạch…",
@@ -145,7 +156,7 @@
     "moves": "Số nước",
     "quiz": "Quiz",
     "score": "Điểm",
-    "cardSubtitle": "Tranh ghép gạch",
+    "cardSubtitle": "Tranh ghép nghệ thuật",
     "guest": "Khách",
     "shareText": "Mình đã ghép xong {title} trong {time} trên Legart. Bạn có nhanh hơn không?",
     "downloaded": "Đã lưu ảnh — hãy đăng từ thư viện ảnh của bạn.",
@@ -190,7 +201,7 @@
   },
   "sharePage": {
     "ogTitle": "{name} đã ghép xong trong {time}",
-    "ogDescription": "“{title}” — tranh ghép gạch {pieces} mảnh trên Legart.",
+    "ogDescription": "“{title}” — tranh ghép {pieces} mảnh trên Legart.",
     "headline": "{name} đã ghép xong trong {time}.",
     "acceptChallenge": "Nhận thách đấu",
     "tryIt": "Thử ghép tranh này"

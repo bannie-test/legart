@@ -1,11 +1,15 @@
-import { linearToSrgb, rgbToLab, srgbToLinear, deltaE76, type Lab, type RGB } from "./color";
-import { preparePalette, type PreparedPalette } from "./palettes";
+import { linearToSrgb, rgbToHex, rgbToLab, srgbToLinear, deltaE76, type Lab, type RGB } from "./color";
+import { AUTO_PALETTE_ID, preparePalette, type PreparedPalette } from "./palettes";
+import { mulberry32 } from "../rng";
 
 export interface MosaicOptions {
   /** Studs horizontally / vertically. */
   width: number;
   height: number;
+  /** a fixed palette id, or "auto" to pick colours from the picture */
   paletteId: string;
+  /** number of colours for the "auto" palette */
+  colorCount?: number;
   dithering: boolean;
   /** -1..1, 0 = unchanged. */
   brightness?: number;
@@ -19,6 +23,8 @@ export interface Mosaic {
   paletteId: string;
   /** Palette index per stud, row-major. */
   indices: Uint8Array;
+  /** hex colours of an "auto" palette (fixed palettes are looked up by id) */
+  colors?: string[];
 }
 
 export interface RawImage {
@@ -127,12 +133,77 @@ export function quantize(rgb: Float32Array, w: number, h: number, pal: PreparedP
   return out;
 }
 
+/**
+ * Picks `k` representative colours from the picture with k-means in CIELAB (k-means++ seeding,
+ * deterministic). Gives far more faithful pixel art than a fixed palette.
+ */
+export function adaptivePalette(rgb: Float32Array, k: number): RGB[] {
+  const n = rgb.length / 3;
+  const lab: Lab[] = [];
+  for (let i = 0; i < n; i++) lab.push(rgbToLab([rgb[i * 3], rgb[i * 3 + 1], rgb[i * 3 + 2]]));
+  k = Math.max(2, Math.min(k, n));
+  const rng = mulberry32(n * 31 + k);
+  const centers: Lab[] = [lab[Math.floor(rng() * n)]];
+  const dist = new Float64Array(n).fill(Infinity);
+  while (centers.length < k) {
+    let total = 0;
+    const last = centers[centers.length - 1];
+    for (let i = 0; i < n; i++) {
+      dist[i] = Math.min(dist[i], deltaE76(lab[i], last));
+      total += dist[i];
+    }
+    if (total === 0) break;
+    let r = rng() * total;
+    let pick = n - 1;
+    for (let i = 0; i < n; i++) if ((r -= dist[i]) <= 0) { pick = i; break; }
+    centers.push(lab[pick]);
+  }
+  const assign = new Int32Array(n);
+  for (let iter = 0; iter < 12; iter++) {
+    const sum = centers.map(() => [0, 0, 0, 0]);
+    const rsum = centers.map(() => [0, 0, 0]);
+    for (let i = 0; i < n; i++) {
+      let best = 0, bd = Infinity;
+      for (let c = 0; c < centers.length; c++) {
+        const d = deltaE76(lab[i], centers[c]);
+        if (d < bd) { bd = d; best = c; }
+      }
+      assign[i] = best;
+      const sm = sum[best];
+      sm[0] += lab[i][0]; sm[1] += lab[i][1]; sm[2] += lab[i][2]; sm[3]++;
+      rsum[best][0] += rgb[i * 3]; rsum[best][1] += rgb[i * 3 + 1]; rsum[best][2] += rgb[i * 3 + 2];
+    }
+    for (let c = 0; c < centers.length; c++) if (sum[c][3]) centers[c] = [sum[c][0] / sum[c][3], sum[c][1] / sum[c][3], sum[c][2] / sum[c][3]];
+    if (iter === 11) {
+      return centers
+        .map((_, c) => (sum[c][3] ? ([rsum[c][0] / sum[c][3], rsum[c][1] / sum[c][3], rsum[c][2] / sum[c][3]] as RGB) : null))
+        .filter((x): x is RGB => x !== null);
+    }
+  }
+  return [];
+}
+
 export function generateMosaic(img: RawImage, opts: MosaicOptions): Mosaic {
-  const pal = preparePalette(opts.paletteId);
   const rgb = downsample(img, opts.width, opts.height);
   adjust(rgb, opts.brightness, opts.contrast, opts.saturation);
+  if (opts.paletteId === AUTO_PALETTE_ID) {
+    const colors = adaptivePalette(rgb, opts.colorCount ?? 32).map((c) => rgbToHex(c));
+    const pal: PreparedPalette = {
+      palette: { id: AUTO_PALETTE_ID, name: { en: "Auto", vi: "Tự động" }, colors: [] },
+      rgb: [],
+      lab: colors.map((h) => rgbToLab([parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)])),
+    };
+    const indices = quantize(rgb, opts.width, opts.height, pal, opts.dithering);
+    return { width: opts.width, height: opts.height, paletteId: AUTO_PALETTE_ID, indices, colors };
+  }
+  const pal = preparePalette(opts.paletteId);
   const indices = quantize(rgb, opts.width, opts.height, pal, opts.dithering);
   return { width: opts.width, height: opts.height, paletteId: pal.palette.id, indices };
+}
+
+/** Hex colour list for a mosaic, whether it uses a fixed or an auto palette. */
+export function mosaicColors(m: Pick<Mosaic, "paletteId" | "colors">, fixed: (id: string) => { hex: string }[]): string[] {
+  return m.colors ?? fixed(m.paletteId).map((c) => c.hex);
 }
 
 /** How many studs of each palette colour the mosaic uses, most used first. */
