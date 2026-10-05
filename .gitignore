@@ -7,7 +7,5 @@ next-env.d.ts
 .env
 .env.local
 .env.*.local
-# downloaded by `npm run library:fetch`
-public/library/*.jpg
-library-src/*
+
 !library-src/README.md
