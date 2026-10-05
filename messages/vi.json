@@ -1,0 +1,282 @@
+{
+  "meta": {
+    "description": "Biến mọi bức ảnh thành tranh ghép — giữ nguyên hoặc dạng pixel art. Đua thời gian, giải đố nghệ thuật và thách đấu bạn bè."
+  },
+  "footer": {
+    "disclaimer": "Legart là dự án phi thương mại. Không liên kết hay được bảo trợ bởi Tập đoàn LEGO.",
+    "credits": "Nguồn ảnh",
+    "privacy": "Quyền riêng tư"
+  },
+  "nav": {
+    "library": "Thư viện",
+    "upload": "Ảnh của tôi",
+    "leaderboard": "Xếp hạng",
+    "me": "Tôi",
+    "login": "Đăng nhập"
+  },
+  "home": {
+    "title": "Ghép tranh nghệ thuật",
+    "subtitle": "Kiệt tác và ảnh của bạn được cắt thành mảnh ghép — ghép lại thật nhanh trước đồng hồ.",
+    "ctaLibrary": "Thư viện Phục Hưng",
+    "ctaUpload": "Dùng ảnh của tôi",
+    "featured": "Kiệt tác",
+    "seeAll": "Xem cả 20 tranh",
+    "how1": "Chọn một bức tranh hoặc tải ảnh lên. Giữ nguyên ảnh gốc hoặc đổi sang pixel art.",
+    "how2": "Chọn số mảnh, mảnh vuông hay jigsaw và độ khó. Rồi đua với đồng hồ.",
+    "how3": "Trả lời quiz nghệ thuật, chia sẻ thành tích và thách đấu bạn bè.",
+    "continueTitle": "Tranh đang ghép dở",
+    "continue": "Chơi tiếp",
+    "joinTitle": "Có mã thách đấu?",
+    "joinHint": "Nhập mã 6 ký tự bạn bè gửi cho bạn.",
+    "join": "Vào"
+  },
+  "library": {
+    "title": "Thư viện Phục Hưng",
+    "subtitle": "20 kiệt tác thuộc phạm vi công cộng, mỗi tranh có bộ câu hỏi riêng.",
+    "difficulty": {
+      "easy": "Nhẹ nhàng",
+      "medium": "Vừa phải",
+      "hard": "Khó nhằn",
+      "expert": "Cực khó"
+    }
+  },
+  "upload": {
+    "title": "Dùng ảnh của tôi",
+    "privacy": "Ảnh được xử lý ngay trên thiết bị này. Ảnh chỉ được tải lên khi bạn chọn lưu vào tài khoản hoặc tạo thử thách.",
+    "pick": "Chọn ảnh",
+    "change": "Chọn ảnh khác",
+    "limits": "JPG, PNG, WebP hoặc HEIC tối đa 10 MB. Dữ liệu vị trí sẽ bị xoá.",
+    "errType": "Tệp này không phải ảnh.",
+    "errSize": "Ảnh lớn hơn 10 MB.",
+    "errRead": "Trình duyệt không đọc được ảnh. Hãy thử JPG hoặc PNG.",
+    "errSave": "Không lưu được ảnh.",
+    "aspect": "Khung tranh",
+    "tapToMove": "Chạm vào ảnh để di chuyển khung.",
+    "name": "Tên",
+    "cloud": "Lưu vào tài khoản của tôi (riêng tư)",
+    "loginForCloud": "Đăng nhập để giữ ảnh trên mọi thiết bị.",
+    "save": "Lưu và thiết lập ván chơi",
+    "saving": "Đang lưu…"
+  },
+  "setup": {
+    "noSource": "Hãy chọn một bức tranh trong thư viện trước.",
+    "error": {
+      "missing-library-image": "Máy chủ chưa tải bức tranh này. Quản trị viên cần chạy:",
+      "not-found": "Không tìm thấy ảnh.",
+      "login-required": "Đăng nhập để mở ảnh lưu trong tài khoản.",
+      "load-failed": "Không tải được ảnh."
+    },
+    "gridInfo": "{rows} × {cols} = {pieces} mảnh · {w} × {h} ô màu",
+    "gridInfoPhoto": "{rows} × {cols} = {pieces} mảnh",
+    "style": "Kiểu tranh",
+    "styles": {
+      "photo": "Ảnh gốc",
+      "pixel": "Pixel art",
+      "brick": "Gạch"
+    },
+    "detailPixel": "Số pixel cạnh dài",
+    "paletteAuto": "Màu lấy từ ảnh",
+    "colorCount": "Số màu",
+    "advancedPhoto": "Chỉnh ảnh",
+    "pieces": "Số mảnh",
+    "bigWarning": "Nhiều mảnh như vậy sẽ rất nhỏ trên điện thoại — nên chơi trên máy tính bảng hoặc máy tính.",
+    "shape": "Kiểu mảnh",
+    "shapes": {
+      "square": "Vuông",
+      "jigsaw": "Jigsaw"
+    },
+    "mode": "Độ khó",
+    "modes": {
+      "easy": "Dễ",
+      "hard": "Khó",
+      "expert": "Siêu khó"
+    },
+    "modeHelp": {
+      "easy": "Không xoay mảnh, ảnh mờ gợi ý trên bàn, mảnh đúng tự khoá có dấu ✓, mảnh viền ra trước, gợi ý không giới hạn.",
+      "hard": "Mảnh bị xoay (chạm để xoay). Mảnh đúng tự khoá nhưng không báo. Xem ảnh gốc +5 giây, 3 gợi ý mỗi lần +10 giây. Điểm ×2.",
+      "expert": "Có xoay, không lưới, không khoá mảnh, không báo đúng sai đến cuối. Một lần xem ảnh 3 giây (+15 giây). Điểm ×3."
+    },
+    "preview": "Ảnh gốc",
+    "previews": {
+      "always": "Hiện song song",
+      "hold": "Nhấn giữ để xem",
+      "off": "Ẩn"
+    },
+    "peekPenalty": "Mỗi lần xem cộng {s} giây vào thời gian.",
+    "advanced": "Tuỳ chỉnh kiểu tranh",
+    "detail": "Số nút gạch cạnh dài",
+    "palette": "Bảng màu",
+    "dithering": "Hoà trộn màu (chuyển sắc mượt hơn)",
+    "brightness": "Độ sáng",
+    "contrast": "Độ tương phản",
+    "saturation": "Độ bão hoà",
+    "start": "Bắt đầu"
+  },
+  "game": {
+    "tray": "Khay mảnh",
+    "trayEmpty": "Mọi mảnh đã ở trên bàn",
+    "zoomOut": "Thu nhỏ",
+    "zoomFit": "Vừa màn hình",
+    "zoomIn": "Phóng to",
+    "notYet": "Chưa đúng hết — cố lên!",
+    "leaveConfirm": "Rời ván chơi? Bạn có thể chơi tiếp sau, nhưng ván này sẽ không được xếp hạng.",
+    "errors": {
+      "no-config": "Chưa thiết lập ván chơi. Hãy chọn ảnh trước.",
+      "missing-library-image": "Máy chủ chưa tải bức tranh này. Quản trị viên cần chạy:",
+      "not-found": "Không tìm thấy ảnh.",
+      "login-required": "Đăng nhập để mở ảnh lưu trong tài khoản.",
+      "load-failed": "Không tải được ván chơi."
+    },
+    "home": "Trang chủ",
+    "quizTitle": "Câu đố nghệ thuật",
+    "back": "Thoát",
+    "moves": "{n} nước",
+    "peek": "Xem ảnh gốc",
+    "peekHelp": "Nhấn giữ để xem ảnh gốc",
+    "hintHelp": "Đặt hộ một mảnh (+{s} giây)",
+    "showRef": "Hiện ảnh gốc",
+    "hideRef": "Ẩn",
+    "refMosaic": "Xem bản đã đổi kiểu",
+    "refPhoto": "Xem ảnh chụp",
+    "reference": "Ảnh gốc",
+    "building": "Đang xếp gạch…",
+    "solved": "Hoàn thành!"
+  },
+  "quiz": {
+    "progress": "Câu {n}/{total}",
+    "right": "Chính xác!",
+    "wrong": "Chưa đúng.",
+    "timeout": "Hết giờ!",
+    "next": "Câu tiếp theo",
+    "finish": "Xem kết quả"
+  },
+  "result": {
+    "myPicture": "Tranh của tôi",
+    "pieces": "mảnh",
+    "moves": "Số nước",
+    "quiz": "Quiz",
+    "score": "Điểm",
+    "cardSubtitle": "Tranh ghép nghệ thuật",
+    "guest": "Khách",
+    "shareText": "Mình đã ghép xong {title} trong {time} trên Legart. Bạn có nhanh hơn không?",
+    "downloaded": "Đã lưu ảnh — hãy đăng từ thư viện ảnh của bạn.",
+    "error": "Có lỗi:",
+    "penalty": "đã gồm {time} thời gian phạt",
+    "newRecord": "Kỷ lục cá nhân mới!",
+    "rank": "Hạng #{rank} trên bảng xếp hạng",
+    "unranked": "Đã lưu nhưng không xếp hạng (ván bị tạm dừng hoặc chơi tiếp).",
+    "flagged": "Đã lưu nhưng thời gian này không xác minh được để xếp hạng.",
+    "loginToRank": "Đăng nhập để có tên trên bảng xếp hạng.",
+    "share": "Chia sẻ thành tích",
+    "sharePost": "Chia sẻ ảnh",
+    "shareStory": "Dạng Story",
+    "publish": "Tạo link công khai",
+    "copy": "Sao chép link",
+    "copied": "Đã sao chép link.",
+    "challengeTitle": "Ai nhanh hơn?",
+    "challengeHelp": "Tạo thử thách: bạn bè nhận đúng bộ xáo trộn này và thời gian của mọi người ghi chung một bảng trong 7 ngày.",
+    "customQuestion": "Thêm câu đố của bạn (tuỳ chọn)",
+    "qQuestion": "Câu hỏi về bức ảnh",
+    "qCorrect": "Đáp án đúng",
+    "qWrong": "Đáp án sai",
+    "createChallenge": "Tạo link thách đấu",
+    "viewChallenge": "Mở trang thử thách",
+    "again": "Chơi lại",
+    "other": "Tranh khác"
+  },
+  "challenge": {
+    "title": "Thách đấu",
+    "ogDescription": "Ghép lại “{title}” ({pieces} mảnh). Bạn có phá được kỷ lục?",
+    "noBackend": "Thử thách cần backend trực tuyến, máy chủ này chưa cấu hình.",
+    "untitled": "Ảnh của một người bạn",
+    "pieces": "mảnh",
+    "expired": "Thử thách này đã kết thúc.",
+    "leaderboard": "Bảng thời gian",
+    "empty": "Chưa có ai — hãy là người đầu tiên!",
+    "guest": "khách",
+    "expires": "Mở đến {date}",
+    "nickname": "Biệt danh của bạn",
+    "guestNote": "Bạn đang chơi với tư cách khách. Đăng nhập để lưu lịch sử.",
+    "play": "Nhận thách đấu"
+  },
+  "sharePage": {
+    "ogTitle": "{name} đã ghép xong trong {time}",
+    "ogDescription": "“{title}” — tranh ghép {pieces} mảnh trên Legart.",
+    "headline": "{name} đã ghép xong trong {time}.",
+    "acceptChallenge": "Nhận thách đấu",
+    "tryIt": "Thử ghép tranh này"
+  },
+  "leaderboard": {
+    "noBackend": "Bảng xếp hạng cần backend trực tuyến, máy chủ này chưa cấu hình.",
+    "title": "Bảng xếp hạng",
+    "pieces": "mảnh",
+    "noPreview": "Không hiện ảnh gốc song song",
+    "withPreview": "Có hiện ảnh gốc song song 👁",
+    "allTime": "Mọi thời điểm",
+    "week": "Tuần này",
+    "error": "Không tải được bảng xếp hạng.",
+    "empty": "Chưa có thành tích xếp hạng.",
+    "rules": "Chỉ tính ván đã xác minh của người chơi đăng nhập. Thời gian đã gồm phạt. Mỗi người một dòng."
+  },
+  "login": {
+    "noBackend": "Máy chủ này chưa cấu hình đăng nhập.",
+    "title": "Đăng nhập",
+    "why": "Lưu ảnh vào tài khoản, giữ lịch sử trên mọi thiết bị, có tên trên bảng xếp hạng và tạo thử thách.",
+    "google": "Tiếp tục với Google",
+    "facebook": "Tiếp tục với Facebook",
+    "or": "hoặc nhận link đăng nhập qua email",
+    "magic": "Gửi link đăng nhập",
+    "sent": "Hãy kiểm tra {email} để lấy link đăng nhập."
+  },
+  "credits": {
+    "title": "Nguồn ảnh",
+    "intro": "Mọi tranh trong thư viện thuộc phạm vi công cộng. Ảnh chụp lấy từ Wikimedia Commons; xem link để biết người chụp, bảo tàng và giấy phép.",
+    "license": "nguồn & giấy phép",
+    "trademark": "LEGO® là nhãn hiệu của Tập đoàn LEGO; tập đoàn không tài trợ, cấp phép hay bảo trợ trang này."
+  },
+  "privacy": {
+    "title": "Quyền riêng tư",
+    "local": "Khi không đăng nhập, ảnh, lịch sử và kỷ lục chỉ nằm trong trình duyệt này (IndexedDB). Không có gì được tải lên.",
+    "cloud": "Khi đăng nhập, ảnh bạn chọn lưu được giữ riêng tư, chỉ bạn mở được. Dữ liệu vị trí (EXIF) bị xoá trước khi tải lên.",
+    "public": "Thử thách và link chia sẻ là công khai: ai có link đều xem được ảnh, tên hiển thị và thời gian của bạn.",
+    "delete": "Bạn có thể xoá ảnh bất kỳ lúc nào và xoá tài khoản (kèm toàn bộ dữ liệu) ở trang “Tôi”.",
+    "analytics": "Trang này không dùng quảng cáo hay cookie theo dõi."
+  },
+  "notFound": {
+    "title": "Trang này đã vỡ vụn.",
+    "home": "Về trang chủ"
+  },
+  "me": {
+    "title": "Legart của tôi",
+    "saved": "Đã lưu.",
+    "synced": "Đã chép {n} ván vào tài khoản.",
+    "deleteConfirm": "Xoá tài khoản, ảnh đã tải lên và lịch sử trực tuyến? Không thể hoàn tác.",
+    "deleted": "Tài khoản đã bị xoá.",
+    "clearConfirm": "Xoá lịch sử lưu trên thiết bị này?",
+    "displayName": "Tên hiển thị (hiện trên bảng xếp hạng)",
+    "save": "Lưu",
+    "sync": "Chép lịch sử trên máy này vào tài khoản",
+    "logout": "Đăng xuất",
+    "deleteAccount": "Xoá tài khoản",
+    "guestInfo": "Bạn đang chơi với tư cách khách. Thành tích được lưu trên thiết bị này.",
+    "login": "Đăng nhập",
+    "offlineInfo": "Thành tích được lưu trên thiết bị này.",
+    "finished": "Tranh đã ghép",
+    "totalTime": "Thời gian chơi",
+    "badges": "Huy hiệu",
+    "myImages": "Ảnh của tôi",
+    "noImages": "Chưa có ảnh nào.",
+    "uploadOne": "Tải ảnh lên",
+    "delete": "Xoá",
+    "bests": "Kỷ lục cá nhân",
+    "noGames": "Chưa ghép xong tranh nào.",
+    "history": "Lịch sử",
+    "clear": "Xoá",
+    "status": {
+      "local": "trên máy",
+      "ranked": "đã xếp hạng",
+      "unranked": "không xếp hạng",
+      "flagged": "chưa xác minh"
+    }
+  }
+}

@@ -1,0 +1,282 @@
+{
+  "meta": {
+    "description": "Turn any picture into a jigsaw puzzle — as it is or as pixel art. Race the clock, answer art quizzes and challenge your friends."
+  },
+  "footer": {
+    "disclaimer": "Legart is a non-commercial fan project. Not affiliated with or endorsed by the LEGO Group.",
+    "credits": "Image credits",
+    "privacy": "Privacy"
+  },
+  "nav": {
+    "library": "Library",
+    "upload": "My photo",
+    "leaderboard": "Rankings",
+    "me": "Me",
+    "login": "Sign in"
+  },
+  "home": {
+    "title": "Art jigsaw puzzles",
+    "subtitle": "Masterpieces and your own photos cut into jigsaw pieces — piece them back together against the clock.",
+    "ctaLibrary": "Renaissance library",
+    "ctaUpload": "Use my photo",
+    "featured": "Masterpieces",
+    "seeAll": "See all 20",
+    "how1": "Pick a painting or upload a photo. Keep it as it is, or turn it into pixel art.",
+    "how2": "Choose pieces, square or jigsaw, and a difficulty. Then race the clock.",
+    "how3": "Answer the art quiz, share your time and challenge friends.",
+    "continueTitle": "Unfinished puzzle",
+    "continue": "Continue",
+    "joinTitle": "Got a challenge code?",
+    "joinHint": "Enter the 6-character code a friend sent you.",
+    "join": "Go"
+  },
+  "library": {
+    "title": "Renaissance library",
+    "subtitle": "20 public-domain masterpieces, each with its own quiz.",
+    "difficulty": {
+      "easy": "Relaxed",
+      "medium": "Medium",
+      "hard": "Tricky",
+      "expert": "Fiendish"
+    }
+  },
+  "upload": {
+    "title": "Use my photo",
+    "privacy": "Your photo is processed on this device. It is only uploaded if you choose to save it to your account or create a challenge.",
+    "pick": "Choose a photo",
+    "change": "Choose another photo",
+    "limits": "JPG, PNG, WebP or HEIC up to 10 MB. Location data is removed.",
+    "errType": "That file is not an image.",
+    "errSize": "The photo is larger than 10 MB.",
+    "errRead": "This browser could not read the photo. Try a JPG or PNG.",
+    "errSave": "Could not save the photo.",
+    "aspect": "Shape of the puzzle",
+    "tapToMove": "Tap the photo to move the frame.",
+    "name": "Name",
+    "cloud": "Also save to my account (private)",
+    "loginForCloud": "Sign in to keep your photos across devices.",
+    "save": "Save and set up puzzle",
+    "saving": "Saving…"
+  },
+  "setup": {
+    "noSource": "Pick a painting from the library first.",
+    "error": {
+      "missing-library-image": "This painting has not been downloaded on the server yet. The site owner needs to run:",
+      "not-found": "Picture not found.",
+      "login-required": "Sign in to open pictures saved in your account.",
+      "load-failed": "The picture could not be loaded."
+    },
+    "gridInfo": "{rows} × {cols} = {pieces} pieces · {w} × {h} cells",
+    "gridInfoPhoto": "{rows} × {cols} = {pieces} pieces",
+    "style": "Picture style",
+    "styles": {
+      "photo": "Original",
+      "pixel": "Pixel art",
+      "brick": "Bricks"
+    },
+    "detailPixel": "Pixels on the long side",
+    "paletteAuto": "Colours from the picture",
+    "colorCount": "Number of colours",
+    "advancedPhoto": "Picture adjustments",
+    "pieces": "Pieces",
+    "bigWarning": "That many pieces get small on a phone — best on a tablet or computer.",
+    "shape": "Piece shape",
+    "shapes": {
+      "square": "Square",
+      "jigsaw": "Jigsaw"
+    },
+    "mode": "Difficulty",
+    "modes": {
+      "easy": "Easy",
+      "hard": "Hard",
+      "expert": "Expert"
+    },
+    "modeHelp": {
+      "easy": "No rotation, faint picture on the board, correct pieces lock with a ✓, edge pieces first, unlimited hints.",
+      "hard": "Pieces are rotated (tap to turn). Correct pieces lock silently. Peeking costs 5 s, 3 hints at 10 s each. Score ×2.",
+      "expert": "Rotation, no grid, nothing locks and no feedback until the end. One 3-second peek (+15 s). Score ×3."
+    },
+    "preview": "Original picture",
+    "previews": {
+      "always": "Side by side",
+      "hold": "Hold to peek",
+      "off": "Hidden"
+    },
+    "peekPenalty": "Each peek adds {s} s to your time.",
+    "advanced": "Style settings",
+    "detail": "Studs on the long side",
+    "palette": "Colour palette",
+    "dithering": "Dithering (smoother shading)",
+    "brightness": "Brightness",
+    "contrast": "Contrast",
+    "saturation": "Saturation",
+    "start": "Start"
+  },
+  "game": {
+    "tray": "Pieces",
+    "trayEmpty": "All pieces are on the table",
+    "zoomOut": "Zoom out",
+    "zoomFit": "Fit to screen",
+    "zoomIn": "Zoom in",
+    "notYet": "Not quite right yet — keep going!",
+    "leaveConfirm": "Leave the puzzle? You can continue later, but it will no longer count for rankings.",
+    "errors": {
+      "no-config": "No puzzle was set up. Pick a picture first.",
+      "missing-library-image": "This painting has not been downloaded on the server yet. The site owner needs to run:",
+      "not-found": "Picture not found.",
+      "login-required": "Sign in to open pictures saved in your account.",
+      "load-failed": "The puzzle could not be loaded."
+    },
+    "home": "Home",
+    "quizTitle": "Art quiz",
+    "back": "Leave",
+    "moves": "{n} moves",
+    "peek": "Peek at the original",
+    "peekHelp": "Press and hold to see the original",
+    "hintHelp": "Place one piece for you (+{s} s)",
+    "showRef": "Show original",
+    "hideRef": "Hide",
+    "refMosaic": "Show styled picture",
+    "refPhoto": "Show photo",
+    "reference": "Original picture",
+    "building": "Laying the bricks…",
+    "solved": "Done!"
+  },
+  "quiz": {
+    "progress": "Question {n} of {total}",
+    "right": "Correct!",
+    "wrong": "Not quite.",
+    "timeout": "Time's up!",
+    "next": "Next question",
+    "finish": "See results"
+  },
+  "result": {
+    "myPicture": "My picture",
+    "pieces": "pieces",
+    "moves": "Moves",
+    "quiz": "Quiz",
+    "score": "Score",
+    "cardSubtitle": "Art jigsaw puzzle",
+    "guest": "Guest",
+    "shareText": "I rebuilt {title} in {time} on Legart. Can you beat me?",
+    "downloaded": "Image saved — post it from your gallery.",
+    "error": "Something went wrong:",
+    "penalty": "includes {time} of penalties",
+    "newRecord": "New personal best!",
+    "rank": "Rank #{rank} on the leaderboard",
+    "unranked": "Saved, but not ranked (game was paused or resumed).",
+    "flagged": "Saved, but this time could not be verified for the rankings.",
+    "loginToRank": "Sign in to appear on the leaderboards.",
+    "share": "Share your achievement",
+    "sharePost": "Share image",
+    "shareStory": "Story format",
+    "publish": "Create a public link",
+    "copy": "Copy link",
+    "copied": "Link copied.",
+    "challengeTitle": "Who is faster?",
+    "challengeHelp": "Create a challenge: friends get exactly the same shuffle and their times go on one board for 7 days.",
+    "customQuestion": "Add your own quiz question (optional)",
+    "qQuestion": "Question about your photo",
+    "qCorrect": "Correct answer",
+    "qWrong": "Wrong answer",
+    "createChallenge": "Create challenge link",
+    "viewChallenge": "Open challenge page",
+    "again": "Play again",
+    "other": "Another painting"
+  },
+  "challenge": {
+    "title": "Challenge",
+    "ogDescription": "Rebuild “{title}” ({pieces} pieces). Can you beat the best time?",
+    "noBackend": "Challenges need the online backend, which is not configured on this server.",
+    "untitled": "A friend's photo",
+    "pieces": "pieces",
+    "expired": "This challenge has ended.",
+    "leaderboard": "Times",
+    "empty": "No times yet — be the first!",
+    "guest": "guest",
+    "expires": "Open until {date}",
+    "nickname": "Your nickname",
+    "guestNote": "Playing as a guest. Sign in to keep your history.",
+    "play": "Accept the challenge"
+  },
+  "sharePage": {
+    "ogTitle": "{name} finished in {time}",
+    "ogDescription": "“{title}” as a {pieces}-piece puzzle on Legart.",
+    "headline": "{name} rebuilt this in {time}.",
+    "acceptChallenge": "Accept the challenge",
+    "tryIt": "Try this puzzle"
+  },
+  "leaderboard": {
+    "noBackend": "Leaderboards need the online backend, which is not configured on this server.",
+    "title": "Leaderboards",
+    "pieces": "pieces",
+    "noPreview": "Without side-by-side original",
+    "withPreview": "With side-by-side original 👁",
+    "allTime": "All time",
+    "week": "This week",
+    "error": "Could not load the leaderboard.",
+    "empty": "No ranked times yet.",
+    "rules": "Only signed-in players' verified games count. Times include penalties. One entry per player."
+  },
+  "login": {
+    "noBackend": "Sign-in is not configured on this server.",
+    "title": "Sign in",
+    "why": "Save photos to your account, keep your history on every device, appear on leaderboards and create challenges.",
+    "google": "Continue with Google",
+    "facebook": "Continue with Facebook",
+    "or": "or get a sign-in link by email",
+    "magic": "Email me a sign-in link",
+    "sent": "Check {email} for your sign-in link."
+  },
+  "credits": {
+    "title": "Image credits",
+    "intro": "All library paintings are in the public domain. Reproductions come from Wikimedia Commons; follow the links for photographers, museums and licence details.",
+    "license": "source & licence",
+    "trademark": "LEGO® is a trademark of the LEGO Group, which does not sponsor, authorise or endorse this site."
+  },
+  "privacy": {
+    "title": "Privacy",
+    "local": "Without an account, your photos, history and records stay in this browser (IndexedDB). Nothing is uploaded.",
+    "cloud": "With an account, photos you choose to save are stored privately and only you can open them. Location data (EXIF) is removed before upload.",
+    "public": "Challenges and share links are public: anyone with the link can see the picture, your display name and your time.",
+    "delete": "You can delete photos at any time and delete your account (with all data) from the “Me” page.",
+    "analytics": "This site uses no advertising or tracking cookies."
+  },
+  "notFound": {
+    "title": "This page fell apart.",
+    "home": "Back home"
+  },
+  "me": {
+    "title": "My Legart",
+    "saved": "Saved.",
+    "synced": "{n} games copied to your account.",
+    "deleteConfirm": "Delete your account, uploaded photos and online history? This cannot be undone.",
+    "deleted": "Your account has been deleted.",
+    "clearConfirm": "Clear the history stored on this device?",
+    "displayName": "Display name (shown on leaderboards)",
+    "save": "Save",
+    "sync": "Copy this device's history to my account",
+    "logout": "Sign out",
+    "deleteAccount": "Delete account",
+    "guestInfo": "You are playing as a guest. Your records are saved on this device.",
+    "login": "Sign in",
+    "offlineInfo": "Records are saved on this device.",
+    "finished": "Puzzles",
+    "totalTime": "Time played",
+    "badges": "Badges",
+    "myImages": "My photos",
+    "noImages": "No photos yet.",
+    "uploadOne": "Upload one",
+    "delete": "Delete",
+    "bests": "Personal bests",
+    "noGames": "No finished puzzles yet.",
+    "history": "History",
+    "clear": "Clear",
+    "status": {
+      "local": "on this device",
+      "ranked": "ranked",
+      "unranked": "unranked",
+      "flagged": "unverified"
+    }
+  }
+}

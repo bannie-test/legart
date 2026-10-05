@@ -1,0 +1,9 @@
+{
+  "name": "Legart — brick art puzzles",
+  "short_name": "Legart",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f4ee",
+  "theme_color": "#c91a09",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}
